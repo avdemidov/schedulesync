@@ -1,3 +1,9 @@
+# Windows batch file
+*.bat
+
+# JSON file
+*.json
+
 # Windows image file caches
 Thumbs.db
 ehthumbs.db
