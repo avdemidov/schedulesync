@@ -32,12 +32,7 @@ QUERY = 'http://oreluniver.ru/schedule//%s///%s/printschedule' # Reverse-enginee
 APPLICATION_NAME = 'ScheduleSync'
 TZ = '+03:00'
 
-TIMETABLE = { 
-    # Workday
-    False: [['08:15', '09:45'], ['09:55', '11:25'], ['12:00', '13:30'], ['13:40', '15:10'], ['15:20','16:50'], ['17:00', '18:30'], ['18:40', '20:10'], ['20:15', '21:45']], 
-    # Saturday
-    True: [['08:15', '09:45'], ['09:55', '11:25'], ['11:35', '13:05'], ['13:15', '14:45'], ['14:55', '16:25'], ['16:35', '18:05']] 
-}
+TIMETABLE = [['08:30', '10:00'], ['10:10', '11:40'], ['12:00', '13:30'], ['13:40', '15:10'], ['15:20', '16:50'], ['17:00', '18:30'], ['18:40', '20:10'], ['20:15', '21:45']]
 
 def get_credentials():
     """Gets valid user credentials from storage.
@@ -80,9 +75,6 @@ def previous_monday_timestamp(date=datetime.date.today()):
     current_monday_timestamp = 1000 * int(time.mktime(current_monday.timetuple()))
     return current_monday_timestamp
 
-def is_saturday(day):
-    return day == 6
-
 def week_events(service, date=datetime.date.today()):
     """Get already added list of events.
 
@@ -106,7 +98,7 @@ def events_from_schedule(schedule, current_monday):
     result = []
     for s in schedule:
         event_name = ' '.join([s['TitleSubject'], '(' + s['TypeLesson'] + ')', s['Korpus'] + '-' +s['NumberRoom'], s['title']])
-        time_shift = time.strptime(TIMETABLE[ is_saturday(s['DayWeek']) ][ s['NumberLesson']-1 ][0], '%H:%M')
+        time_shift = time.strptime(TIMETABLE[ s['NumberLesson']-1 ][0], '%H:%M')
         lesson_start = datetime.datetime.fromtimestamp(current_monday/1000)
         lesson_start += datetime.timedelta(days=s['DayWeek']-1, hours=time_shift.tm_hour, minutes=time_shift.tm_min)
         lesson_end = lesson_start + datetime.timedelta(hours=1, minutes=30) # Duration of lesson is one hour and thirty minutes.
