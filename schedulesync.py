@@ -27,7 +27,7 @@ SCOPES = 'https://www.googleapis.com/auth/calendar'
 CLIENT_SECRET_FILE = flags.secret
 PERSON_ID = flags.person[0] # Could be retrieved from reverse-engineered JS-query http://oreluniver.ru/schedule
 CALENDAR_ID = flags.calendar[0] 
-QUERY = 'http://oreluniver.ru/schedule//%s///%s/printschedule' # JS-query http://oreluniver.ru/schedule
+QUERY = 'http://oreluniver.ru/schedule/%s////%s/printschedule' # JS-query http://oreluniver.ru/schedule
 
 APPLICATION_NAME = 'ScheduleSync'
 TZ = '+03:00'
